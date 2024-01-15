@@ -51,12 +51,13 @@ def get_index(files):
     st.write(f"{((token_counter.prompt_llm_token_count / 1000) * 0.01) + (token_counter.completion_llm_token_count / 1000) * 0.03} $ Used." if st.session_state.model_choice == "gpt-4" else f"{((token_counter.prompt_llm_token_count / 1000) * 0.001) + (token_counter.completion_llm_token_count / 1000) * 0.002} $ Used.")
     return index
 
-index = get_index(files)
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+if st.session_state.file_uploaded:
+    index = get_index(files)
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 if st.session_state.index:
     prompt = st.chat_input()
