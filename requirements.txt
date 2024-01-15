@@ -1,3 +1,4 @@
 llama-index==0.9.26
 openai==1.6.1
 tiktoken==0.5.2
+pypdf==3.9.1
