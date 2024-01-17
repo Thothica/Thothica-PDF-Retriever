@@ -28,7 +28,7 @@ def file_uploaded():
 with st.expander(label = "File Upload", expanded = not st.session_state.file_uploaded):
     with st.form("file-upload"):
         files = st.file_uploader(label = "Please upload the PDF files -", accept_multiple_files = True)
-        st.session_state.model_choice = st.selectbox("Which OpenAI model do you want to use?", options = ["gpt-4", "gpt-3.5-turbo", "gpt-4-1106-preview"], index = 1)
+        st.session_state.model_choice = "gpt-4-1106-preview"
         similarity_top_k = st.slider(label = "Similarity top k", min_value = 2, max_value = 5, value = 2)
         submit = st.form_submit_button(label = "Submit", on_click = file_uploaded)
 
@@ -48,7 +48,7 @@ def get_index(files):
     docs = SimpleDirectoryReader(input_dir = temp_dir.name).load_data()
     index = VectorStoreIndex.from_documents(docs, show_progress = True)
     st.session_state.index = True
-    st.write(f"{((token_counter.prompt_llm_token_count / 1000) * 0.01) + (token_counter.completion_llm_token_count / 1000) * 0.03} $ Used." if st.session_state.model_choice == "gpt-4" else f"{((token_counter.prompt_llm_token_count / 1000) * 0.001) + (token_counter.completion_llm_token_count / 1000) * 0.002} $ Used.")
+    # st.write(f"{((token_counter.prompt_llm_token_count / 1000) * 0.01) + (token_counter.completion_llm_token_count / 1000) * 0.03} $ Used." if st.session_state.model_choice == "gpt-4" else f"{((token_counter.prompt_llm_token_count / 1000) * 0.001) + (token_counter.completion_llm_token_count / 1000) * 0.002} $ Used.")
     return index
 
 if st.session_state.file_uploaded:
